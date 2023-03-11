@@ -7,9 +7,6 @@ import com.kiwi.rbac.model.UserEntity;
 import com.kiwi.rbac.model.req.UserReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Component
 public class UserService {

@@ -2,7 +2,6 @@ package com.kiwi.rbac.controller;
 
 
 import com.kiwi.common.ResultBean;
-import com.kiwi.rbac.dao.UserDao;
 import com.kiwi.rbac.model.UserEntity;
 import com.kiwi.rbac.model.req.UserReq;
 import com.kiwi.rbac.service.UserService;

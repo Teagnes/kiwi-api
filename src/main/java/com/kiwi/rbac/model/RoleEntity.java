@@ -1,11 +1,16 @@
 package com.kiwi.rbac.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "role", schema = "kiwi", catalog = "")
+@Getter
+@Setter
 public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -18,62 +23,22 @@ public class RoleEntity {
     @Column(name = "description")
     private String description;
     @Basic
-    @Column(name = "creat_time")
-    private Timestamp creatTime;
+    @Column(name = "create_time")
+    private Timestamp createTime;
     @Basic
     @Column(name = "update_time")
     private Timestamp updateTime;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Timestamp getCreatTime() {
-        return creatTime;
-    }
-
-    public void setCreatTime(Timestamp creatTime) {
-        this.creatTime = creatTime;
-    }
-
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RoleEntity that = (RoleEntity) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(creatTime, that.creatTime) && Objects.equals(updateTime, that.updateTime);
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(createTime, that.createTime) && Objects.equals(updateTime, that.updateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, creatTime, updateTime);
+        return Objects.hash(id, name, description, createTime, updateTime);
     }
 }
