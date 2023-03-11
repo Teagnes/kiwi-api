@@ -3,7 +3,11 @@ package com.kiwi.doc.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenerationTime;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -13,6 +17,8 @@ import java.util.Objects;
 @Table(name = "doc", schema = "kiwi", catalog = "")
 @Getter
 @Setter
+@DynamicUpdate
+@DynamicInsert
 public class DocEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -28,13 +34,14 @@ public class DocEntity {
     @Column(name = "doc_uuid")
     private String docUuid;
     @Basic
-    @Column(name = "create_time")
+    @Column(name = "create_time" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh_CN", timezone = "GMT+8")
-    private Date createTime;
+
+    private Timestamp createTime;
     @Basic
-    @Column(name = "update_time")
+    @Column(name = "update_time" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh_CN", timezone = "GMT+8")
-    private Date updateTime;
+    private Timestamp updateTime;
 
 
     @Override
