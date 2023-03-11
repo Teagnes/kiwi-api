@@ -1,0 +1,23 @@
+server:
+  port: 9999
+
+spring:
+  profiles:
+    active: local
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 0
+      initial-size: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      pool-name: NezhaHikariCP
+      test-connection-on-checkout: true
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/kiwi?characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
