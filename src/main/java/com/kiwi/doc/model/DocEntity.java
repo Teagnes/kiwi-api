@@ -33,6 +33,10 @@ public class DocEntity {
     @Basic
     @Column(name = "doc_uuid")
     private String docUuid;
+
+    @Basic
+    @Column(name = "version_uuid")
+    private String versionUuid;
     @Basic
     @Column(name = "create_time" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh_CN", timezone = "GMT+8")
@@ -41,7 +45,11 @@ public class DocEntity {
     @Basic
     @Column(name = "update_time" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh_CN", timezone = "GMT+8")
+    @Json
     private Timestamp updateTime;
+
+    @Transient // 非数据库字段，在映射时忽略
+    private  String  docContent;
 
 
     @Override

@@ -12,5 +12,7 @@ public interface DocDao extends JpaRepository<DocEntity ,Integer> {
 
     Page<DocEntity> findAllByUserId(Integer userId, Pageable pageable);
 
+    DocEntity findDocEntitiesByDocUuid(String uuid);
+
 
 }

@@ -1,6 +1,7 @@
 package com.kiwi.doc.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kiwi.common.ResultBean;
 import com.kiwi.doc.model.DocEntity;
 import com.kiwi.doc.model.req.DocReq;
@@ -31,5 +32,11 @@ public class DocController {
         return  docService.findDocByUserId(-1,pageReq.getPage(), pageReq.getSize());
     }
 
+
+    @ResponseBody
+    @PostMapping("/updateDoc")
+    public ResultBean<DocEntity>  updateDoc(@RequestBody DocReq docReq) throws JsonProcessingException {
+        return  docService.updateDoc(docReq);
+    }
 
 }

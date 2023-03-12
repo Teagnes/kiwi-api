@@ -21,3 +21,8 @@ spring:
     show-sql: true
     database: MYSQL
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+es:
+  host: localhost
+  port: 9200
+  docIndex: kiwi-doc
+

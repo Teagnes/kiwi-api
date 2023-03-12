@@ -142,6 +142,7 @@ CREATE TABLE `doc`
     `doc_name` varchar(255) NULL DEFAULT NULL,
     INDEX `user_role_uid_fk` (`user_id`) USING BTREE,
     `doc_uuid` varchar(255) NOT NULL  COMMENT '文档uuid' ,
+    `version_uuid` varchar(255)  NULL  COMMENT '文档的当前版本uuid' ,
     `create_time` timestamp not NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp not NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`) USING BTREE

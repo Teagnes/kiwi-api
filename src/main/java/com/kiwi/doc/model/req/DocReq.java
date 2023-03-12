@@ -10,4 +10,9 @@ public class DocReq {
 
     private String docName;
 
+    private String docUuid;
+
+    private String content;
+
+
 }
