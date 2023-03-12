@@ -72,21 +72,21 @@ public class DocService {
         docEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         docEntity.setDocUuid(docReq.getDocUuid());
         docEntity.setVersionUuid(esDocId);
+        docEntity.setDocContent(docReq.getContent());
         docDao.saveAndFlush(docEntity);
         String s = om.writeValueAsString(docEntity);
-        send2es(s);
+        send2es(s,docEntity.getDocUuid());
         return  new ResultBean<>(docEntity);
     }
 
 
-    public void  send2es(String docJsonString){
-        String url = String.format("http://%s:%s/%s",esHost,esPort,docIndex);
-        HttpRequest httpRequest = HttpRequest.put(url).acceptJson();
+    public void  send2es(String docJsonString,String doc_uuid){
+        String url = String.format("http://%s:%s/%s/%s",esHost,esPort,docIndex,doc_uuid);
+        HttpRequest httpRequest = HttpRequest.post(url).acceptJson();
         httpRequest.header("content-type","application/json; charset=UTF-8");
         httpRequest.send(docJsonString);
         int code = httpRequest.code();
         String body = httpRequest.body();
-        System.out.println(body);
 
 
     }
