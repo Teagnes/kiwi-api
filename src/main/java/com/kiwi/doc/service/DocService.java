@@ -9,6 +9,16 @@ import com.kiwi.doc.dao.DocDao;
 import com.kiwi.doc.model.DocEntity;
 import com.kiwi.doc.model.req.DocReq;
 import io.swagger.models.auth.In;
+import org.apache.http.HttpHost;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -18,6 +28,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -32,17 +43,21 @@ public class DocService {
     @Autowired
     ObjectMapper om ;
 
-    @Value("${es.host}")
-    private String esHost;
-
-    @Value("${es.port}")
-    private String esPort;
+    @Autowired
+    RestHighLevelClient esClient;
 
     @Value("${es.docIndex}")
     private String docIndex;
 
+    @Value("${es.docIndex}-his")
+    private String docIndexHis;
 
 
+
+    public ResultBean<DocEntity> getDocByDocId(String docId) throws IOException {
+        DocEntity docEntity = getDocByID(docIndex, docId);
+        return new ResultBean<>(docEntity);
+    }
 
     public ResultBean<DocEntity> createDoc(DocReq docReq){
         DocEntity docEntity = new DocEntity();
@@ -65,29 +80,37 @@ public class DocService {
 
     }
 
-    public ResultBean<DocEntity> updateDoc(DocReq docReq) throws JsonProcessingException {
-        String esDocId = UUID.randomUUID().toString();
+    public ResultBean<DocEntity> updateDoc(DocReq docReq) throws IOException {
+        String versionUUID = UUID.randomUUID().toString();
         DocEntity docEntity = docDao.findDocEntitiesByDocUuid(docReq.getDocUuid());
         docEntity.setDocName(docReq.getDocName());
         docEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         docEntity.setDocUuid(docReq.getDocUuid());
-        docEntity.setVersionUuid(esDocId);
+        docEntity.setVersionUuid(versionUUID);
         docEntity.setDocContent(docReq.getContent());
         docDao.saveAndFlush(docEntity);
         String s = om.writeValueAsString(docEntity);
-        send2es(s,docEntity.getDocUuid());
+        send2es(docIndex,s,docEntity.getDocUuid());
+        send2es(docIndexHis,s,versionUUID);
         return  new ResultBean<>(docEntity);
     }
 
 
-    public void  send2es(String docJsonString,String doc_uuid){
-        String url = String.format("http://%s:%s/%s/%s",esHost,esPort,docIndex,doc_uuid);
-        HttpRequest httpRequest = HttpRequest.post(url).acceptJson();
-        httpRequest.header("content-type","application/json; charset=UTF-8");
-        httpRequest.send(docJsonString);
-        int code = httpRequest.code();
-        String body = httpRequest.body();
+    public void  send2es(String index,String docJsonString,String uuid) throws IOException {
+        IndexRequest source = new IndexRequest(index).id(uuid).source(docJsonString, XContentType.JSON);
+        IndexResponse index1 = esClient.index(source, RequestOptions.DEFAULT);
+        RestStatus status = index1.status();
+    }
 
+    public DocEntity getDocByID(String index,String uuid) throws IOException {
+
+
+        GetRequest getRequest = new GetRequest(index, uuid);
+        GetResponse response = esClient.get(getRequest, RequestOptions.DEFAULT);
+        String sourceAsString = response.getSourceAsString();
+        DocEntity entity = om.readValue(sourceAsString, DocEntity.class);
+
+        return  entity;
 
     }
 

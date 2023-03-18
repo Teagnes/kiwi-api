@@ -11,12 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/v1/doc")
 public class DocController {
 
     @Autowired
     DocService docService;
+
+    @ResponseBody
+    @GetMapping("/{docId}")
+    public ResultBean<DocEntity> getDoc(@PathVariable String docId) throws IOException {
+        return  docService.getDocByDocId(docId);
+
+    }
 
 
     @ResponseBody
@@ -26,16 +35,16 @@ public class DocController {
         return docService.createDoc(docReq);
     }
 
-    @ResponseBody
+
     @PostMapping("/findAllDoc")
     public ResultBean<Page<DocEntity>>  findAllDoc(@RequestBody PageReq pageReq){
         return  docService.findDocByUserId(-1,pageReq.getPage(), pageReq.getSize());
     }
 
 
-    @ResponseBody
+
     @PostMapping("/updateDoc")
-    public ResultBean<DocEntity>  updateDoc(@RequestBody DocReq docReq) throws JsonProcessingException {
+    public ResultBean<DocEntity>  updateDoc(@RequestBody DocReq docReq) throws IOException {
         return  docService.updateDoc(docReq);
     }
 

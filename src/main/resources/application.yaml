@@ -25,4 +25,5 @@ es:
   host: localhost
   port: 9200
   docIndex: kiwi-doc
+  docIndexHis: kiwi-doc-his
 
