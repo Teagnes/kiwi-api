@@ -116,11 +116,11 @@ CREATE TABLE `user_role`
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO role (name,description) values
-                                        ('USER','一般用户') ,('USER_OP','操作用户'),('ADMIN','管理员');
+('USER','一般用户') ,('USER_OP','操作用户'),('ADMIN','管理员');
 
 insert into  user (username,usercname,password) values
-                                                    ('u_normal','测试一般用户','123456'),
-                                                    ('u_admin','测试管理员','123456');
+('u_normal','测试一般用户','123456'),
+('u_admin','测试管理员','123456');
 
 insert into user_role(user_id,role_id) values
     (1,1);
@@ -150,3 +150,52 @@ CREATE TABLE `doc`
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci COMMENT = '文档表'
   ROW_FORMAT = Dynamic;
+
+
+DROP TABLE IF EXISTS `note`;
+
+CREATE TABLE `note`
+(
+    `id`       int(11)      NOT NULL AUTO_INCREMENT,
+    `create_user_id` int(11) NULL DEFAULT NULL COMMENT  '创建用户',
+    `note_name` varchar(255) NULL DEFAULT NULL COMMENT  '库名称',
+    INDEX `user_role_uid_fk` (`create_user_id`) USING BTREE,
+    `note_uuid` varchar(255) NOT NULL  COMMENT '库uuid' ,
+    `create_time` timestamp not NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp not NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8
+  COLLATE = utf8_general_ci COMMENT = '文档库表明'
+  ROW_FORMAT = Dynamic;
+
+insert into  note ( create_user_id,note_name,note_uuid ) values
+    (1,'测试文档库','xxxxxxxxxxxuuuuuuuuu');
+
+
+
+-- 库用户关联表
+
+DROP TABLE IF EXISTS `note_user`;
+
+CREATE TABLE `note_user`
+(
+    `id`       int(11)      NOT NULL AUTO_INCREMENT,
+    `note_id` int(11) NULL DEFAULT NULL,
+    `user_id` int(11) NULL DEFAULT NULL,
+    INDEX `user_note_rid_fk` (`note_id`) USING BTREE,
+    INDEX `user_note_uid_fk` (`user_id`) USING BTREE,
+    CONSTRAINT `user_user_uid_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT `user_noet_rid_fk` FOREIGN KEY (`note_id`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8
+  COLLATE = utf8_general_ci COMMENT = '文档库库用户关联表'
+  ROW_FORMAT = Dynamic;
+
+insert into  note_user (note_id,user_id) values
+(1,1);
+
+
