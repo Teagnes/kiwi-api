@@ -199,3 +199,26 @@ insert into  note_user (note_id,user_id) values
 (1,1);
 
 
+CREATE TABLE `note_doc`
+(
+    `id`       int(11)      NOT NULL AUTO_INCREMENT,
+    `note_id` int(11) NULL DEFAULT NULL,
+    `doc_id` int(11) NULL DEFAULT NULL,
+    INDEX `doc_note_rid_fk` (`note_id`) USING BTREE,
+    INDEX `doc_note_uid_fk` (`doc_id`) USING BTREE,
+    CONSTRAINT `note_doc_nid_fk` FOREIGN KEY (`note_id`) REFERENCES `note` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT `note_doc_uid_fk` FOREIGN KEY (`doc_id`) REFERENCES `doc` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8
+  COLLATE = utf8_general_ci COMMENT = '文档库库用户关联表'
+  ROW_FORMAT = Dynamic;
+
+insert into  note_doc (note_id,doc_id) values
+(1,1),(1,2),(1,3);
+insert into note_doc (note_id,doc_id) values
+(2,4);
+
+

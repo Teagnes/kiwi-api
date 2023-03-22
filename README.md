@@ -13,6 +13,7 @@ docker images | grep init_mysql
 
 # 创建容器
 docker run -itd  --name mysql-rbac -p 3306:3306 -e  TZ=Asia/Shanghai -e  MYSQL_ROOT_PASSWORD=root -d init_mysql:v0.1
+
 ```
 
 

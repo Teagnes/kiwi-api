@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/doc")
@@ -46,6 +47,12 @@ public class DocController {
     @PostMapping("/updateDoc")
     public ResultBean<DocEntity>  updateDoc(@RequestBody DocReq docReq) throws IOException {
         return  docService.updateDoc(docReq);
+    }
+
+    @GetMapping("/findAllDocsByNote/{noteId}")
+    public  ResultBean<List<DocEntity>> findAllDocsByNote(@PathVariable Integer noteId){
+        return  docService.findDocsByNote(noteId);
+
     }
 
 }

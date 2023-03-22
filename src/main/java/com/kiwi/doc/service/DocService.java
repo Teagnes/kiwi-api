@@ -114,5 +114,10 @@ public class DocService {
 
     }
 
+    public ResultBean<List<DocEntity>> findDocsByNote(Integer noteId){
+        return new ResultBean<>(docDao.findDocEntitiesByNote(noteId));
+
+    }
+
 
 }

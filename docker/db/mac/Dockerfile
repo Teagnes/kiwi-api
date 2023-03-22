@@ -1,5 +1,5 @@
 
-FROM ibex/debian-mysql-server-5.7
+FROM --platform=linux/amd64 mysql:5.7
 ENV AUTO_RUN_DIR /docker-entrypoint-initdb.d
 ENV INSTALL_DB_SQL init_database.sql
 COPY ./$INSTALL_DB_SQL $AUTO_RUN_DIR/
