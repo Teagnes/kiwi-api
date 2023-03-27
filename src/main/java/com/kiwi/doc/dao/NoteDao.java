@@ -11,4 +11,6 @@ import java.util.List;
 public interface NoteDao   extends JpaRepository<NoteEntity,Integer> {
 
     List<NoteEntity> findAllByCreateUserIdOrderByCreateTimeDesc(Integer userid);
+
+    NoteEntity findByCreateUserIdAndNoteName(Integer createUserId,String noteName);
 }

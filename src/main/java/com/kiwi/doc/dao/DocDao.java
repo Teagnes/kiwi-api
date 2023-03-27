@@ -19,5 +19,7 @@ public interface DocDao extends JpaRepository<DocEntity ,Integer> {
     @Query(value = "select d.id,d.user_id,d.doc_name ,d.create_time ,d.update_time ,d.doc_uuid ,d.version_uuid from  note_doc n left join  doc d on n.doc_id= d.id where n.note_id=?1 order by d.update_time desc " ,nativeQuery = true)
     List<DocEntity>  findDocEntitiesByNote( Integer noteID);
 
+    void removeByDocUuid(String docUuid);
+
 
 }

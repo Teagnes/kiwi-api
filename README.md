@@ -24,3 +24,16 @@ docker pull elasticsearch:7.17.7
 docker run --name elasticsearch-7 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -d elasticsearch:7.17.7
 
 ```
+
+集成ik分词插件
+```shell
+apt-get update
+apt-get install wget 
+
+cd plugins
+mkdir ik 
+cd ik
+wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.17.7/elasticsearch-analysis-ik-7.17.7.zip
+unzip elasticsearch-analysis-ik-7.17.7.zip
+rm elasticsearch-analysis-ik-7.17.7.zip
+```
