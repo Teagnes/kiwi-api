@@ -133,6 +133,26 @@ insert into role_permission (role_id,permission_id) values
 
 
 
+-- 继承权限关系表
+DROP  TABLE IF EXISTS `role_relation`;
+
+CREATE TABLE  `role_relation` (
+ `id` int(11) NOT NULL AUTO_INCREMENT  COMMENT '自增主键',
+ `parent_role_id` int(11) NULL DEFAULT NULL COMMENT '父角色id',
+ `child_role_id` int(11) NULL DEFAULT NULL COMMENT '子角色id',
+ `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+ `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8
+  COLLATE = utf8_general_ci COMMENT = '角色关系表'
+  ROW_FORMAT = Dynamic;
+
+
+
+
+
+
 DROP TABLE IF EXISTS `doc`;
 
 CREATE TABLE `doc`
