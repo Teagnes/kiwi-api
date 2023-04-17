@@ -29,8 +29,10 @@ public class LoginController {
     }
 
 
-
-
-
+    @GetMapping("/token/{token}")
+    public ResultBean<UserInfoRes> token(@PathVariable String token){
+        ResultBean<UserInfoRes> userInfo = loginService.verifyToken(token);
+        return userInfo;
+    }
 
 }
