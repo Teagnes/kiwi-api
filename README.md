@@ -37,3 +37,58 @@ wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.17.
 unzip elasticsearch-analysis-ik-7.17.7.zip
 rm elasticsearch-analysis-ik-7.17.7.zip
 ```
+
+
+### elasticsearh-head
+```shell
+
+{
+    "settings": {
+        "index": {
+            "number_of_shards": 1,
+            "number_of_replicas": 1
+        }
+    },
+    "mappings": {
+        "_source": {
+            "enabled": true
+        },
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "user_id": {
+                "type": "integer"
+            },
+            "doc_name": {
+                "type": "text",
+                "analyzer": "ik_max_word",
+                "search_analyzer": "ik_max_word"
+            },
+            "note_name": {
+                "type": "text",
+                "analyzer": "ik_max_word",
+                "search_analyzer": "ik_max_word"
+            },
+            "doc_uuid": {
+                "type": "keyword"
+            },
+            "version_uuid": {
+                "type": "keyword"
+            },
+            "create_title": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+            },
+            "update_time": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+            },
+            "doc_content": {
+                "type": "text",
+                "analyzer": "ik_max_word",
+                "search_analyzer": "ik_max_word"
+            }
+        }
+    }
+}

@@ -1,6 +1,9 @@
 package com.kiwi.rbac.config;
 
+import com.kiwi.rbac.service.RbacService;
+import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -35,8 +38,8 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String token = (String) principals.getPrimaryPrincipal();
         String username = TokenUtil.getUserName(token);
-//        Set<String> roles = rbacService.getRoles(username);
-//        Set<String> perPermissions = rbacService.getPermissions(username);
+        Set<String> roles = rbacService.getRoles(username);
+        Set<String> perPermissions = rbacService.getPermissions(username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setRoles(roles);
         info.setStringPermissions(perPermissions);

@@ -57,6 +57,10 @@ public class DocEntity {
     @JsonProperty("doc_content")
     private  String  docContent;
 
+    @Transient // 非数据库字段，在映射时忽略
+    @JsonProperty("note_name")
+    private String noteName;
+
 
     @Override
     public boolean equals(Object o) {

@@ -6,10 +6,7 @@ import com.kiwi.common.ResultBean;
 import com.kiwi.doc.dao.DocDao;
 import com.kiwi.doc.dao.NoteDao;
 import com.kiwi.doc.dao.NoteDocDao;
-import com.kiwi.doc.model.DocEntity;
-import com.kiwi.doc.model.HighLightDocEntity;
-import com.kiwi.doc.model.NoteDocEntity;
-import com.kiwi.doc.model.NoteEntity;
+import com.kiwi.doc.model.*;
 import com.kiwi.doc.model.req.DocReq;
 import com.kiwi.doc.model.req.NewDocReq;
 import com.kiwi.doc.model.req.SearchReq;
@@ -81,7 +78,7 @@ public class DocService {
     public ResultBean<DocEntity> createDoc(NewDocReq newDocReq) throws IOException {
         NoteEntity noteEntity = createNewNoteIfNoteE(newDocReq.getNoteName());
         DocEntity newDoc = createNewDoc(newDocReq.getDocName());
-        send2es(docIndex,om.writeValueAsString(newDoc),newDoc.getDocUuid());
+        send2ES(docIndex,newDoc,newDoc.getDocUuid());
         saveNoteDoc(noteEntity,newDoc);
         return new ResultBean<>(newDoc);
     }
@@ -148,14 +145,17 @@ public class DocService {
         docEntity.setDocContent(docReq.getContent());
         docDao.saveAndFlush(docEntity);
         String s = om.writeValueAsString(docEntity);
-        send2es(docIndex,s,docEntity.getDocUuid());
-        send2es(docIndexHis,s,versionUUID);
+        send2ES(docIndex,docEntity,docEntity.getDocUuid());
+        send2ES(docIndexHis,docEntity,versionUUID);
         return  new ResultBean<>(docEntity);
     }
 
 
-    public void  send2es(String index,String docJsonString,String uuid) throws IOException {
-        IndexRequest source = new IndexRequest(index).id(uuid).source(docJsonString, XContentType.JSON);
+    public void  send2ES(String index,DocEntity docEntity,String uuid) throws IOException {
+        NoteEntity note = noteDao.findNoteEntityByCreateUserIdAndDocId(1, docEntity.getId());
+        String noteName = note.getNoteName();
+        docEntity.setNoteName(noteName);
+        IndexRequest source = new IndexRequest(index).id(uuid).source(om.writeValueAsString(docEntity), XContentType.JSON);
         IndexResponse index1 = esClient.index(source, RequestOptions.DEFAULT);
         RestStatus status = index1.status();
     }

@@ -3,11 +3,15 @@ package com.kiwi.rbac.config;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class JwtFilter  extends BasicHttpAuthenticationFilter {
 
@@ -48,12 +52,11 @@ public class JwtFilter  extends BasicHttpAuthenticationFilter {
         String token = httpServletRequest.getHeader(X_TOKEN);
         if(StringUtils.isEmpty(token)){
             logger.error("token 为空");
-
         }
-
         try {
             TokenUtil.verify(token);
             // 如果没有抛出异常则代表登入成功，返回true
+            JwtToken jwtToken = new JwtToken(token);
             getSubject(request, response).login(jwtToken);
         }catch (Exception e){
             logger.error("token 校验未通过[{}] {}",token,e.getMessage(),e);
@@ -68,9 +71,7 @@ public class JwtFilter  extends BasicHttpAuthenticationFilter {
         try {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
             //设置编码，否则中文字符在重定向时会变为空字符串
-
             httpServletResponse.sendRedirect("/v1/filterError/" + resultcode);
-
         } catch (IOException e1) {
             logger.error(e1.getMessage());
         }

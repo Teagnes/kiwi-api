@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface NoteDocDao extends JpaRepository<NoteDocEntity,Integer> {
 
     void deleteByDocId(Integer docid );
+
+
 }
