@@ -28,7 +28,7 @@
         </rollingPolicy>
     </appender>
     <!--    灵活指定日志级别，在com.sports 下的日志设置为debug级别-->
-    <logger name="com.sports" level="DEBUG" additivity="false">
+    <logger name="com.kiwi" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="LOG_FILE"/>
     </logger>
