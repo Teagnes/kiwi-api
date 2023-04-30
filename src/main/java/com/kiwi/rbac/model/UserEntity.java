@@ -27,6 +27,9 @@ public class UserEntity {
     @Basic
     @Column(name = "usercname")
     private String usercname;
+
+    // 一般大的共公司都是继承域认证，无需保存密码，这里只是为了演示
+    @JsonIgnore
     @Basic
     @Column(name = "password")
     private String password;

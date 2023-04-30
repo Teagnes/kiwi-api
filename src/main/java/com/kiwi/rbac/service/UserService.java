@@ -10,6 +10,7 @@ import com.kiwi.rbac.repository.UserRepository;
 import com.kiwi.rbac.model.UserEntity;
 import com.kiwi.rbac.model.req.UserReq;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,22 +18,10 @@ public class UserService {
     @Autowired
     private  UserRepository userRepository;
 
-    public ResultBean<UserEntity> createUser(UserReq userReq) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUsercname(userReq.getUserCname());
-        userEntity.setUsername(userReq.getUserName());
-        userEntity.setPassword(userReq.getPwd());
-        UserEntity userEntitiesByUserName = userRepository.findByUsername(userReq.getUserName());
-        if (userEntitiesByUserName != null) {
+    @Value("${jwt.expireTimeMillis}")
+    private Long expireTimeMillis;
 
-        } else {
 
-            userRepository.save(userEntity);
-//            userReq
-//            userRoleDao.saveAll()
-        }
-        return ResultUtil.success(userEntity);
-    }
 
     public UserEntity getUserByToken(String xToken){
         String userName = TokenUtil.getUserName(xToken);
@@ -40,9 +29,13 @@ public class UserService {
         return user;
     }
 
-    public ResultBean<UserEntity> getUserInfo(String xToken){
-        UserEntity user = getUserByToken(xToken);
-        return ResultUtil.success(user);
+    public ResultBean<UserEntity> getUserInfo(String userName){
+        UserEntity user = userRepository.findByUsername(userName);
+        if(user == null){
+            return ResultUtil.fail(ResultEnum.USER_NOT_EXIST);
+        }else{
+            return ResultUtil.success(user);
+        }
     }
 
     public ResultBean<UserInfoRes> login(String username, String password) {
@@ -52,20 +45,21 @@ public class UserService {
         } else if (!user.getPassword().equals(password)) {
             return ResultUtil.fail(ResultEnum.PASSWORD_ERROR);
         } else {
-            String sign = TokenUtil.sign(username, password);
+            String sign = TokenUtil.sign(username, password ,expireTimeMillis);
             UserInfoRes userInfoRes = new UserInfoRes(user, sign);
             return ResultUtil.success(userInfoRes);
         }
     }
 
-    public ResultBean<UserEntity> register(String username, String password) {
-        UserEntity user = userRepository.findByUsername(username);
+    public ResultBean<UserEntity> register(UserReq userReq) {
+        UserEntity user = userRepository.findByUsername(userReq.getUserName());
         if (user != null) {
             return ResultUtil.fail(ResultEnum.USER_EXIST);
         } else {
             UserEntity userEntity = new UserEntity();
-            userEntity.setUsername(username);
-            userEntity.setPassword(password);
+            userEntity.setUsername(userReq.getUserName());
+            userEntity.setPassword(userReq.getUserCname());
+            userEntity.setUsercname(userReq.getUserCname());
             userRepository.save(userEntity);
             return ResultUtil.success(userEntity);
         }
@@ -81,8 +75,31 @@ public class UserService {
         }else{
             throw new RbacException("401","token error");
         }
+    }
 
 
+    public ResultBean<UserEntity> updateUser(UserReq userReq){
+        UserEntity user = userRepository.findByUsername(userReq.getUserName());
+        if(user == null){
+            return ResultUtil.fail(ResultEnum.USER_NOT_EXIST);
+        }else{
+            user.setUsercname(userReq.getUserCname());
+            user.setPassword(userReq.getPwd());
+            user.setUsername(userReq.getUserName());
+            userRepository.save(user);
+            return ResultUtil.success(user);
+        }
+    }
+
+
+    public ResultBean deleteUser(String userName){
+        UserEntity user = userRepository.findByUsername(userName);
+        if(user == null){
+            return ResultUtil.fail(ResultEnum.USER_NOT_EXIST);
+        }else{
+            userRepository.delete(user);
+            return ResultUtil.success(user);
+        }
     }
 
 }

@@ -153,12 +153,14 @@ INSERT INTO role (name,description) values
 insert into user_role(user_id,role_id) values
  (1,1);
 
-insert into permission (name, description )values
-('permission:info','权限:用户详细权限');
+insert into permission (name, `description` )values
+('permission:info','权限:用户详细权限'),
+('user','创建用户权限');
 
 insert into role_permission (role_id,permission_id) values
 (1,1);
-
+insert into role_permission (role_id,permission_id) values
+(1,2);
 
 
 -- 继承权限关系表

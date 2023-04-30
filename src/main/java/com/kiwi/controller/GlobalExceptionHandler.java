@@ -4,6 +4,7 @@ import com.kiwi.common.ResultBean;
 import com.kiwi.common.ResultEnum;
 import com.kiwi.common.ResultUtil;
 import com.kiwi.rbac.exception.RbacException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -42,11 +43,21 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(value = UnauthorizedException.class)
+    public ResponseEntity unauthorizedExceptionHandler(HttpServletRequest request, UnauthorizedException e) {
+        logger.error("Request URL : {}, Exception : {}", request.getRequestURL(), e.getMessage());
+        return  new ResponseEntity<ResultBean<String>>(ResultUtil.fail(ResultEnum.USE_NOT_FOBIDDEN ,e.getMessage() ),null, HttpStatus.FORBIDDEN);
+    }
+
+
     @ExceptionHandler(value = RuntimeException.class)
     public ResultBean<String> runtimeExceptionHandler(HttpServletRequest request, RuntimeException e) {
 
         logger.error("Request URL : {}, Exception : {}", request.getRequestURL(), e);
         return ResultUtil.failDefault(e.getMessage());
     }
+
+
+
 
 }

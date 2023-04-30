@@ -9,6 +9,8 @@ import java.io.Serializable;
 public class ResultBean<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private String code = "-1";
+
     private String msg = "SUCESS";
 
     private T data;
@@ -21,7 +23,13 @@ public class ResultBean<T> implements Serializable {
 
     private static final String FAIL_DEFAUKT="1";
 
-    public ResultBean(String msg, T data) {
+    public ResultBean(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public ResultBean(String code ,String msg, T data) {
+        this.code = code;
         this.msg = msg;
         this.data = data;
     }

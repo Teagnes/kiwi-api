@@ -23,8 +23,7 @@ public class TokenUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(TokenUtil.class);
 
-    //token到期时间60s
-    private static final long EXPIRE_TIME= 2*60*1000;
+
     //密钥盐
     private static final String TOKEN_SECRET="xxxx12345";
 
@@ -33,10 +32,10 @@ public class TokenUtil {
      * @param loginReq
      * @return
      */
-    public static String sign(String username ,String  password){
+    public static String sign(String username ,String  password,Long expireTimeMillis){
         String token=null;
         try {
-            Date expireAt=new Date(System.currentTimeMillis()+EXPIRE_TIME);
+            Date expireAt=new Date(System.currentTimeMillis()+expireTimeMillis);
             token = JWT.create()
                     //发行人
                     .withIssuer("auth0")

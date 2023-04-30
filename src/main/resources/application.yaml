@@ -27,3 +27,5 @@ es:
   docIndex: kiwi-doc
   docIndexHis: kiwi-doc-his
 
+jwt:
+  expireTimeMillis: 28800000

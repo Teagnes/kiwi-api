@@ -1,6 +1,5 @@
 package com.kiwi.rbac.config;
 
-import com.kiwi.common.ResultBean;
 import com.kiwi.rbac.model.RoleEntity;
 import com.kiwi.rbac.model.UserEntity;
 import com.kiwi.rbac.service.UserService;
@@ -40,17 +39,14 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String token = (String) principals.getPrimaryPrincipal();
-        String username = TokenUtil.getUserName(token);
-//        Set<String> roles = rbacService.getRoles(username);
-//        Set<String> perPermissions = rbacService.getPermissions(username);
         UserEntity userByToken = userService.getUserByToken(token);
         Set<RoleEntity> roles = userByToken.getRoles();
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        for (RoleEntity role : roles) {
-            info.addRole(role.getName());
+        for (RoleEntity r : roles){
+            info.addRole(r.getName());
+            r.getPermissions().forEach(p -> info.addStringPermission(p.getName()));
         }
-//        info.setStringPermissions(perPermissions);
         return info;
     }
 
