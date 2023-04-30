@@ -44,13 +44,15 @@ CREATE TABLE `role`
     `id`       int(11)                                       NOT NULL AUTO_INCREMENT,
     `name`        varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL UNIQUE COMMENT '权限名称',
     `description` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限描述',
-    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci COMMENT = '角色表'
   ROW_FORMAT = Dynamic;
+
+
 
 
 -- ----------------------------
@@ -69,13 +71,14 @@ CREATE TABLE `user_role`
     INDEX `user_role_rid_fk` (`role_id`) USING BTREE,
     CONSTRAINT `user_role_rid_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `user_role_uid_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci COMMENT = '用户角色表'
   ROW_FORMAT = Dynamic;
+
 
 
 
@@ -98,6 +101,7 @@ CREATE TABLE `permission`
   ROW_FORMAT = Dynamic;
 
 
+
 -- ----------------------------
 -- Table structure for role_permission
 -- ----------------------------
@@ -115,8 +119,8 @@ CREATE TABLE `role_permission`
     INDEX `role_permission_pid_fk` (`permission_id`) USING BTREE,
     CONSTRAINT `role_permission_pid_fk` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,
     CONSTRAINT `role_permission_uid_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,
-    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8
@@ -124,21 +128,35 @@ CREATE TABLE `role_permission`
   ROW_FORMAT = Dynamic;
 
 
-insert into  user (username,usercname,password) values
-('u_normal','测试一般用户','123456'),
-('u_admin','测试管理员','123456');
 
+-- 数据初始化
+
+insert into  user (username,usercname,password) values
+                                                    ('u_admin','测试管理员','123456'),
+                                                    ('u_normal','测试一般用户','123456');
 INSERT INTO role (name,description) values
-('USER','一般用户') ,('USER_OP','操作用户'),('ADMIN','管理员');
+                                        ('ADMIN','管理员'),('USER','一般用户') ;
 
 insert into user_role(user_id,role_id) values
- (1,1);
+    (1,1);
 
-insert into permission (name, description )values
-('permission:info','权限:用户详细权限');
+INSERT INTO permission (name,description) values
+                                              ('permission:info','权限:用户详细权限'),
+                                              ('user','用户权限'),
+                                              ('role','角色权限'),
+                                              ('permission','权限');
 
 insert into role_permission (role_id,permission_id) values
-(1,1);
+                                                        (1,1),(1,2),(1,3),(1,4);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -149,15 +167,31 @@ CREATE TABLE  `role_relation` (
  `id` int(11) NOT NULL AUTO_INCREMENT  COMMENT '自增主键',
  `parent_role_id` int(11) NULL DEFAULT NULL COMMENT '父角色id',
  `child_role_id` int(11) NULL DEFAULT NULL COMMENT '子角色id',
- `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
- `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+ `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+ `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci COMMENT = '角色关系表'
   ROW_FORMAT = Dynamic;
 
+--  --------------------------
+--  role and child role relation
+--  --------------------------
+DROP  TABLE  IF EXISTS `role_relation`;
 
+CREATE TABLE  IF NOT EXISTS `role_relation`
+(
+    `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+    `parent_role_id` int(11)  NULL  DEFAULT NULL COMMENT  '父角色id',
+    `child_role_id` int(11) NULL DEFAULT  NULL COMMENT '子角色id',
+    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
+)ENGINE = InnoDB
+ CHARACTER SET = utf8
+ COLLATE = utf8_general_ci
+ ROW_FORMAT = Dynamic;
 
 
 
@@ -172,8 +206,8 @@ CREATE TABLE `doc`
     INDEX `user_role_uid_fk` (`user_id`) USING BTREE,
     `doc_uuid` varchar(255) NOT NULL  COMMENT '文档uuid' ,
     `version_uuid` varchar(255)  NULL  COMMENT '文档的当前版本uuid' ,
-    `create_time` timestamp not NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time` timestamp not NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8

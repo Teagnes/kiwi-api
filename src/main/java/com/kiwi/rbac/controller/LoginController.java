@@ -4,6 +4,7 @@ import com.kiwi.common.ResultBean;
 import com.kiwi.rbac.model.req.LoginReq;
 import com.kiwi.rbac.model.res.UserInfoRes;
 import com.kiwi.rbac.service.UserService;
+import io.swagger.annotations.Api;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 
+@Api(value = "登录接口", tags = "登录接口")
 @RestController
 @RequestMapping("/v1")
 @Log

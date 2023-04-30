@@ -11,8 +11,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(value = "用户管理", tags = "用户接口")
 @RestController
-@RequestMapping("/v1/rbac")
+@RequestMapping("/v1/rbac/user")
 public class UserController {
 
     @Autowired

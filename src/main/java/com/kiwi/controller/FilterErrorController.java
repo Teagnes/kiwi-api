@@ -15,15 +15,15 @@ public class FilterErrorController {
     private static final Logger logger = LoggerFactory.getLogger(FilterErrorController.class);
 
     @ResponseBody
-    @GetMapping ("/filterError/emtpyToken")
+    @RequestMapping ("/filterError/emtpyToken")
     public ResponseEntity filterEmptyError(){
-        return new ResponseEntity(ResultUtil.fail(ResultEnum.USER_TOKEN_EMPTY), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity(ResultUtil.fail(ResultEnum.TOKEN_EMPTY), HttpStatus.UNAUTHORIZED);
     }
 
     @ResponseBody
-    @GetMapping ("/filterError/invalideToken")
+    @RequestMapping ("/filterError/invalideToken")
     public ResponseEntity filterTokenError(){
-        return new ResponseEntity(ResultUtil.fail(ResultEnum.USER_TOKEN_INVALID), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity(ResultUtil.fail(ResultEnum.TOKEN_INVALID), HttpStatus.UNAUTHORIZED);
     }
 
 }

@@ -8,16 +8,23 @@ public enum  ResultEnum {
     SUCCESS("000000", "success"),
 
     UNKNOWN_ERROR("-1", "未知错误"),
-    USER_NOT_EXIST("100001", "用户不存在"),
     PASSWORD_ERROR("100002", "密码错误"),
 
-    USER_TOKEN_EMPTY("100201", "token为空"),
-    USER_TOKEN_INVALID("100202", "token失效"),
-    USER_TOKEN_ILLEGAL("100203", "非法token"),
+    TOKEN_EMPTY("100201", "token为空"),
+    TOKEN_INVALID("100202", "token失效"),
+    TOKEN_ILLEGAL("100203", "非法token"),
 
-    USER_NOT_UNAUTHORIZED("100401", "用户未登录"),
+    USER_EXIST("100301", "用户已存在"),
+    USER_NOT_EXIST("100302", "用户不存在"),
+    USER_NOT_EMPTY("100303", "用户不能为空"),
+    USER_NOT_UNAUTHORIZED("100304", "用户未登录"),
+    USE_NOT_FOBIDDEN("100305", "用户无权限"),
 
-    USE_NOT_FOBIDDEN("100403", "用户无权限"),
+    ROLE_EXIST("100401", "角色已存在"),
+    ROLE_NOT_EXIST("100402", "角色不存在"),
+    ROLE_NOT_EMPTY("100403", "角色不能为空"),
+
+
 
     PERMISSION_EXIST("101001", "权限已存在"),
     PERMISSION_NOT_EXIST("101002", "权限不存在"),
@@ -25,8 +32,7 @@ public enum  ResultEnum {
     PERMISSION_NOT_USED("101004", "权限未被使用"),
     PERMISSION_NOT_EMPTY("101005", "权限不能为空"),
 
-    USER_EXIST("102001", "用户已存在"),
-    ROLE_EXIST("103001", "角色已存在"),
+
 
 
     PARAM_ERROR("200001", "参数不合法"),
