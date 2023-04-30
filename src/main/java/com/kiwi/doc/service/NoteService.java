@@ -2,6 +2,7 @@ package com.kiwi.doc.service;
 
 
 import com.kiwi.common.ResultBean;
+import com.kiwi.common.ResultUtil;
 import com.kiwi.doc.dao.NoteDao;
 import com.kiwi.doc.model.NoteEntity;
 import com.kiwi.doc.model.req.NoteReq;
@@ -21,7 +22,7 @@ public class NoteService {
     NoteDao noteDao;
 
     public ResultBean<List<NoteEntity>>  findAllByUser(Integer userId){
-        return new ResultBean<>(noteDao.findAllByCreateUserIdOrderByCreateTimeDesc(userId));
+        return ResultUtil.success(noteDao.findAllByCreateUserIdOrderByCreateTimeDesc(userId));
     }
 
     public ResultBean<NoteEntity> createNote(NoteReq noteReq){
@@ -32,7 +33,7 @@ public class NoteService {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         noteEntity.setCreateTime(timestamp);
         noteEntity.setUpdateTime(timestamp);
-        return  new ResultBean<>(noteDao.save(noteEntity));
+        return  ResultUtil.success(noteDao.save(noteEntity));
 
     }
 

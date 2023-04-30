@@ -5,6 +5,7 @@ import com.kiwi.common.ResultBean;
 import com.kiwi.rbac.model.UserEntity;
 import com.kiwi.rbac.model.req.UserReq;
 import com.kiwi.rbac.service.UserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +18,14 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/createUser")
-
+    @RequiresPermissions("" +
+            ":createUser")
     public ResultBean<UserEntity> createUser(@RequestBody UserReq userReq){
         return userService.createUser(userReq);
+    }
+
+    public ResultBean<UserEntity> getUserInfo(@RequestHeader String xToken){
+        return userService.getUserInfo(xToken);
     }
 
 

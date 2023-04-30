@@ -1,5 +1,6 @@
 package com.kiwi.rbac.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,9 +23,13 @@ public class PermissionEntity {
     @Basic
     @Column(name = "description")
     private String description;
+
+    @JsonIgnore
     @Basic
     @Column(name = "create_time")
     private Timestamp createTime;
+
+    @JsonIgnore
     @Basic
     @Column(name = "update_time")
     private Timestamp updateTime;

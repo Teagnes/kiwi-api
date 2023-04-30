@@ -4,6 +4,7 @@ import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         // 放行 登陆接口
         filterChainDefinitionMap.put("/v1/login","anon");
+        filterChainDefinitionMap.put("/v1/token/*","anon");
         filterChainDefinitionMap.put("/v1/filterError/*", "anon");
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/error", "anon");
@@ -41,7 +43,7 @@ public class ShiroConfig {
 
         //创建将自己的jwt过滤器添加到shiro中
         HashMap<String, Filter> filterMap = new HashMap<>();
-//        filterMap.put("jwt",new JwtFilter(true));
+        filterMap.put("jwt",new JwtFilter(true));
         shiroFilterFactoryBean.setFilters(filterMap);
         // 其他路径下的接口进行登陆拦截
         filterChainDefinitionMap.put("/**","jwt");

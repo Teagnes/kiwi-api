@@ -1,6 +1,8 @@
 package com.kiwi.controller;
 
 import com.kiwi.common.ResultBean;
+import com.kiwi.common.ResultEnum;
+import com.kiwi.common.ResultUtil;
 import com.kiwi.rbac.exception.RbacException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ResultBean<String> exceptionHandler(HttpServletRequest request, Exception e) {
         logger.error("Request URL : {}, Exception : {}", request.getRequestURL(), e);
-        return new ResultBean<>(e.getMessage());
+//        return new ResultBean<>(e.getMessage());
+        return ResultUtil.failDefault(e.getMessage());
     }
 
 
@@ -26,9 +29,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity   rbacExceptionHandler(HttpServletRequest request, RbacException e) {
         switch (e.getCode()) {
             case "401":
-                return new ResponseEntity<ResultBean<String>>(new ResultBean<>(e.getCode(), e.getMessage()), null, HttpStatus.UNAUTHORIZED);
-//            case "404":
-//                return new ResultBean<>(e.getCode(), e.getMessage());
+                return new ResponseEntity<ResultBean<String>>(ResultUtil.fail(ResultEnum.USER_NOT_UNAUTHORIZED), null, HttpStatus.UNAUTHORIZED);
+            case "403":
+                return new ResponseEntity<ResultBean<String>>(ResultUtil.fail(ResultEnum.USE_NOT_FOBIDDEN), null, HttpStatus.FORBIDDEN);
 //            case "500":
 //                return new ResultBean<>(e.getCode(), e.getMessage());
             default:
@@ -43,7 +46,7 @@ public class GlobalExceptionHandler {
     public ResultBean<String> runtimeExceptionHandler(HttpServletRequest request, RuntimeException e) {
 
         logger.error("Request URL : {}, Exception : {}", request.getRequestURL(), e);
-        return new ResultBean<>(e.getMessage());
+        return ResultUtil.failDefault(e.getMessage());
     }
 
 }

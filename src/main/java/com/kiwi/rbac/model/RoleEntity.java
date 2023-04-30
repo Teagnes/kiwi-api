@@ -1,17 +1,22 @@
 package com.kiwi.rbac.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "role", schema = "kiwi", catalog = "")
 @Getter
 @Setter
 public class RoleEntity {
+    public RoleEntity() {
+    }
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -22,12 +27,23 @@ public class RoleEntity {
     @Basic
     @Column(name = "description")
     private String description;
+
+    @JsonIgnore
     @Basic
     @Column(name = "create_time")
     private Timestamp createTime;
+
+    @JsonIgnore
     @Basic
     @Column(name = "update_time")
     private Timestamp updateTime;
+
+
+    @ManyToMany(targetEntity = PermissionEntity.class, cascade = CascadeType.MERGE , fetch =  FetchType.EAGER)
+    @JoinTable(name = "role_permission", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id")) // 通过中间表user_role来映射
+    @OrderBy("id ASC")
+    private Set<PermissionEntity> permissions;
 
     @Override
     public boolean equals(Object o) {
