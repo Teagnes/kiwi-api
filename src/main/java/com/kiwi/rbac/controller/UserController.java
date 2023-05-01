@@ -41,6 +41,15 @@ public class UserController {
         return userService.getUserInfo(userName);
     }
 
+//    @ApiOperation(value = "分页获取用户列表", notes = "分页获取用户列表")
+//    @ResponseBody
+//    @PostMapping("/getUserList")
+//    @RequiresPermissions("user")
+//    public ResultBean<UserEntity> getUserList(@RequestBody UserReq userReq){
+//        return userService.getUserList(userReq);
+//    }
+
+
     @ApiOperation(value = "更新用户信息", notes = "更新用户信息")
     @ResponseBody
     @PutMapping("/updateUser")

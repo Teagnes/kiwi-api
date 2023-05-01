@@ -17,7 +17,7 @@
                 <![CDATA[%n[%d{yyyy-MM-dd HH:mm:ss.SSS}] [level: %p] %m ]]></pattern>
         </encoder>
         <!--日志名称-->
-        <file>E:/workspace/logs/kiwi.log</file>
+        <file>/tmp/kiwi.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 滚动日志的名称-->
             <fileNamePattern>xdemo.-%d{yyyyMMdd}.%i.log</fileNamePattern>

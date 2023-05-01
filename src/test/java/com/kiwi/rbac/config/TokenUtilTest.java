@@ -20,7 +20,7 @@ public class TokenUtilTest {
         LoginReq loginReq = new LoginReq();
         loginReq.setUsername("123");
         loginReq.setPassword("123");
-        String sign = TokenUtil.sign(loginReq.getUsername(), loginReq.getPassword());
+        String sign = TokenUtil.sign(loginReq.getUsername(), loginReq.getPassword(), 1000L);
         Boolean verify = TokenUtil.verify(sign);
         assertEquals("token check",true,verify);
 

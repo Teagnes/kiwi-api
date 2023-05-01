@@ -1,5 +1,5 @@
 server:
-  port: 9999
+  port: 8088
 
 spring:
   profiles:
@@ -14,7 +14,7 @@ spring:
       pool-name: NezhaHikariCP
       test-connection-on-checkout: true
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1/kiwi?characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://mysqldb/kiwi?characterEncoding=utf8&useSSL=false
     username: root
     password: root
   jpa:
