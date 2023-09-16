@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Set;
@@ -13,7 +14,8 @@ import java.util.Set;
 @Table(name = "user", schema = "kiwi", catalog = "")
 @Getter
 @Setter
-public class UserEntity {
+public class UserEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     public UserEntity() {
     }
 

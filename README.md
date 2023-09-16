@@ -2,6 +2,11 @@
 后台管理模块
 
 
+## swagger 访问地址
+```http
+http://localhost:8088/doc.html
+```
+
 ## docker
 ### mysql 数据库
 WIN 环境安装

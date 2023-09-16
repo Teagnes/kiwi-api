@@ -22,7 +22,7 @@ public class RoleController {
     @ApiOperation(value = "创建角色", notes = "创建角色")
     @PostMapping("/createRole")
     @ResponseBody
-    @RequiresPermissions("role")
+    @RequiresPermissions("p_role")
     public ResultBean<RoleEntity> createRole(@RequestBody RoleReq roleReq){
         return roleService.createRole(roleReq);
     }
@@ -31,7 +31,7 @@ public class RoleController {
     @ApiOperation(value = "删除角色", notes = "删除角色")
     @DeleteMapping("/deleteRole/{id}")
     @ResponseBody
-    @RequiresPermissions("role")
+    @RequiresPermissions("p_role")
     public ResultBean<RoleEntity> deleteRole(@PathVariable Integer id){
         return roleService.deleteRole(id);
     }
@@ -39,7 +39,7 @@ public class RoleController {
     @ApiOperation(value = "更新角色", notes = "更新角色")
     @PutMapping("/updateRole")
     @ResponseBody
-    @RequiresPermissions("role")
+    @RequiresPermissions("p_role")
     public ResultBean<RoleEntity> updateRole(@RequestBody RoleReq roleReq){
         return roleService.updateRole(roleReq);
     }
@@ -47,7 +47,7 @@ public class RoleController {
     @ApiOperation(value = "获取角色列表", notes = "获取角色列表")
     @GetMapping("/getRoleList")
     @ResponseBody
-    @RequiresPermissions("role")
+    @RequiresPermissions("p_role")
     public ResultBean<RoleEntity> getRoleList(){
         return roleService.getRoleList();
     }

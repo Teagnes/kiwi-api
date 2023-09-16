@@ -22,7 +22,7 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "创建用户")
     @ResponseBody
     @PostMapping("/createUser")
-    @RequiresPermissions("user")
+    @RequiresPermissions("p_user")
     public ResultBean<UserEntity> createUser(@RequestBody UserReq userReq){
         return userService.register(userReq);
     }
@@ -36,24 +36,16 @@ public class UserController {
     @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
     @ResponseBody
     @GetMapping("/getUserInfo/{userName}")
-    @RequiresPermissions("user")
+    @RequiresPermissions("p_user")
     public ResultBean<UserEntity> getUserInfo(@PathVariable String userName){
         return userService.getUserInfo(userName);
     }
-
-//    @ApiOperation(value = "分页获取用户列表", notes = "分页获取用户列表")
-//    @ResponseBody
-//    @PostMapping("/getUserList")
-//    @RequiresPermissions("user")
-//    public ResultBean<UserEntity> getUserList(@RequestBody UserReq userReq){
-//        return userService.getUserList(userReq);
-//    }
 
 
     @ApiOperation(value = "更新用户信息", notes = "更新用户信息")
     @ResponseBody
     @PutMapping("/updateUser")
-    @RequiresPermissions("user")
+    @RequiresPermissions("p_user")
     public ResultBean<UserEntity> updateUser(@RequestBody UserReq userReq){
         return userService.updateUser(userReq);
     }
@@ -61,7 +53,7 @@ public class UserController {
     @ApiOperation(value = "删除用户", notes = "删除用户")
     @ResponseBody
     @DeleteMapping("/deleteUser/{userName}")
-    @RequiresPermissions("user")
+    @RequiresPermissions("p_user")
     public ResultBean<UserEntity> deleteUser(@PathVariable String userName){
         return userService.deleteUser(userName);
     }

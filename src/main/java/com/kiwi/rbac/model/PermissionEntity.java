@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -12,7 +13,9 @@ import java.util.Objects;
 @Table(name = "permission", schema = "kiwi", catalog = "")
 @Getter
 @Setter
-public class PermissionEntity {
+public class PermissionEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

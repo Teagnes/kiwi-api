@@ -5,7 +5,9 @@ import com.kiwi.common.ResultEnum;
 import com.kiwi.common.ResultUtil;
 import com.kiwi.rbac.config.TokenUtil;
 import com.kiwi.rbac.exception.RbacException;
+import com.kiwi.rbac.model.RoleEntity;
 import com.kiwi.rbac.model.res.UserInfoRes;
+import com.kiwi.rbac.repository.RoleRepository;
 import com.kiwi.rbac.repository.UserRepository;
 import com.kiwi.rbac.model.UserEntity;
 import com.kiwi.rbac.model.req.UserReq;
@@ -13,10 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Component
 public class UserService {
     @Autowired
     private  UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Value("${jwt.expireTimeMillis}")
     private Long expireTimeMillis;
@@ -60,7 +68,14 @@ public class UserService {
             userEntity.setUsername(userReq.getUserName());
             userEntity.setPassword(userReq.getUserCname());
             userEntity.setUsercname(userReq.getUserCname());
-            userRepository.save(userEntity);
+            Set<RoleEntity> roleSet = userReq.getRoles().stream().map(
+                    roleId -> {
+                        RoleEntity role = roleRepository.findById(roleId).get();
+                        return role;
+                    }
+            ).collect(Collectors.toSet());
+            userEntity.setRoles(roleSet);
+            userRepository.save(userEntity); // 用户角色信息
             return ResultUtil.success(userEntity);
         }
     }

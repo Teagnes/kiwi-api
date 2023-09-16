@@ -21,7 +21,7 @@ public class PermissionController {
     @ApiOperation(value = "获取权限列表", notes = "获取权限列表")
     @GetMapping("/getPermissionList")
     @ResponseBody
-    @RequiresPermissions("permission")
+    @RequiresPermissions("p_permission")
     public ResultBean<PermissionEntity> getPermissionList(){
         return permissionService.getPermissionList();
     }
@@ -29,7 +29,7 @@ public class PermissionController {
     @ApiOperation(value = "创建权限", notes = "创建权限")
     @PostMapping("/createPermission")
     @ResponseBody
-    @RequiresPermissions("permission")
+    @RequiresPermissions("p_permission")
     public ResultBean<PermissionEntity> createPermission(@RequestBody PermissionReq permissionReq){
         return permissionService.createPermission(permissionReq);
     }
@@ -37,7 +37,7 @@ public class PermissionController {
     @ApiOperation(value = "删除权限", notes = "删除权限")
     @DeleteMapping("/deletePermission/{id}")
     @ResponseBody
-    @RequiresPermissions("permission")
+    @RequiresPermissions("p_permission")
     public ResultBean<PermissionEntity> deletePermission(@PathVariable Integer id){
         return permissionService.deletePermission(id);
     }
@@ -45,7 +45,7 @@ public class PermissionController {
     @ApiOperation(value = "更新权限", notes = "更新权限")
     @PutMapping("/updatePermission")
     @ResponseBody
-    @RequiresPermissions("permission")
+    @RequiresPermissions("p_permission")
     public ResultBean<PermissionEntity> updatePermission(@RequestBody PermissionReq permissionReq){
         return permissionService.updatePermission(permissionReq);
     }
