@@ -5,14 +5,14 @@
 ## docker
 ### mysql 数据库
 ```shell
+# MAC
 # 构建镜像
-docker build -t init_mysql:v0.1 .
-
+cd docker/db/mac
+docker build -t kiwi_mysql:v0.1 .
 # 查看镜像
-docker images | grep init_mysql
-
+docker images | grep kiwi_mysql
 # 创建容器
-docker run -itd  --name mysql-rbac -p 3306:3306 -e  TZ=Asia/Shanghai -e  MYSQL_ROOT_PASSWORD=root -d init_mysql:v0.1
+docker run -itd  --name mysql-rbac -p 3306:3306 -e  TZ=Asia/Shanghai -e  MYSQL_ROOT_PASSWORD=root -d kiwi_mysql:v0.1
 
 ```
 

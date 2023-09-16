@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "role", schema = "kiwi", catalog = "")
@@ -28,6 +29,9 @@ public class RoleEntity {
     @Basic
     @Column(name = "update_time")
     private Timestamp updateTime;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<PermissionEntity> permissionEntities;
 
     @Override
     public boolean equals(Object o) {

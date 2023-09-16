@@ -6,13 +6,14 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "kiwi", catalog = "")
 @Getter
 @Setter
 public class UserEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //主键由数据库自动生成（主要是自动增长型）
     @Id
     @Column(name = "id")
     private int id;
@@ -31,6 +32,10 @@ public class UserEntity {
     @Basic
     @Column(name = "update_time")
     private Timestamp updateTime;
+
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RoleEntity> roles;
 
     @Override
     public boolean equals(Object o) {

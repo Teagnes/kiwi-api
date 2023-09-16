@@ -1,8 +1,8 @@
 package com.kiwi.rbac.service;
 
 import com.kiwi.common.ResultBean;
-import com.kiwi.rbac.dao.UserDao;
-import com.kiwi.rbac.dao.UserRoleDao;
+import com.kiwi.rbac.repository.UserRepository;
+import com.kiwi.rbac.repository.UserRoleRepository;
 import com.kiwi.rbac.model.UserEntity;
 import com.kiwi.rbac.model.req.UserReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserService {
     @Autowired
-    UserDao userDao;
+    UserRepository userDao;
 
     @Autowired
-    UserRoleDao userRoleDao;
+    UserRoleRepository userRoleDao;
 
 
     public ResultBean<UserEntity> createUser(UserReq userReq) {
