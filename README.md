@@ -4,15 +4,13 @@
 
 ## docker
 ### mysql 数据库
+WIN 环境安装
 ```shell
 # 构建镜像
-docker build -t init_mysql:v0.1 .
-
-# 查看镜像
-docker images | grep init_mysql
-
+cd .\docker\db\win\
+docker build -t kiwi_mysql:v0.1 .
 # 创建容器
-docker run -itd  --name mysql-rbac -p 3306:3306 -e  TZ=Asia/Shanghai -e  MYSQL_ROOT_PASSWORD=root -d init_mysql:v0.1
+docker run -itd  --name mysql-rbac -p 3306:3306 -e  TZ=Asia/Shanghai -e  MYSQL_ROOT_PASSWORD=root -d kiwi_mysql:v0.1
 
 ```
 
