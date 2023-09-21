@@ -2,15 +2,18 @@
 后台管理模块
 
 
+## swagger 访问地址
+```http
+http://localhost:8088/doc.html
+```
+
 ## docker
 ### mysql 数据库
+WIN 环境安装
 ```shell
-# MAC
 # 构建镜像
-cd docker/db/mac
+cd .\docker\db\win\
 docker build -t kiwi_mysql:v0.1 .
-# 查看镜像
-docker images | grep kiwi_mysql
 # 创建容器
 docker run -itd  --name mysql-rbac -p 3306:3306 -e  TZ=Asia/Shanghai -e  MYSQL_ROOT_PASSWORD=root -d kiwi_mysql:v0.1
 

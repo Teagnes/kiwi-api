@@ -17,7 +17,7 @@
                 <![CDATA[%n[%d{yyyy-MM-dd HH:mm:ss.SSS}] [level: %p] %m ]]></pattern>
         </encoder>
         <!--日志名称-->
-        <file>E:/workspace/logs/kiwi.log</file>
+        <file>/tmp/kiwi.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 滚动日志的名称-->
             <fileNamePattern>xdemo.-%d{yyyyMMdd}.%i.log</fileNamePattern>
@@ -28,7 +28,7 @@
         </rollingPolicy>
     </appender>
     <!--    灵活指定日志级别，在com.sports 下的日志设置为debug级别-->
-    <logger name="com.sports" level="DEBUG" additivity="false">
+    <logger name="com.kiwi" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="LOG_FILE"/>
     </logger>

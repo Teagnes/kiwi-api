@@ -3,7 +3,6 @@ package com.kiwi.rbac.config;
 import org.apache.shiro.authc.AuthenticationToken;
 
 public class JwtToken implements AuthenticationToken {
-
     private static final long serialVersionUID = 1L;
 
     private String token ;

@@ -3,6 +3,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+docker/app/*.jar
+
 ### IntelliJ IDEA ###
 .idea/
 .idea/*.xml

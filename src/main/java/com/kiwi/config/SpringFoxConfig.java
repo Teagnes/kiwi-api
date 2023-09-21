@@ -23,7 +23,7 @@ public class SpringFoxConfig {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
         aParameterBuilder
                 .parameterType("header")
-                .name("X_TOKEN")
+                .name("xtoken")
                 .description("token值")
                 .modelRef(new ModelRef("string"))
                 .required(false).build();

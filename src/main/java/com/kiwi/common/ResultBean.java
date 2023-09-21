@@ -9,14 +9,9 @@ import java.io.Serializable;
 public class ResultBean<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public static final String SUCESS = "0";
-
-    private static final String FAIL_DEFAUKT="1";
+    private String code = "-1";
 
     private String msg = "SUCESS";
-
-    @ApiModelProperty(name = "code码", value = "0为成功", dataType = "String")
-    private String code = SUCESS;
 
     private T data;
 
@@ -24,28 +19,18 @@ public class ResultBean<T> implements Serializable {
         super();
     }
 
-    public ResultBean(T data) {
-        super();
-        this.data = data;
-        this.code = SUCESS;
-    }
+    public static final String SUCESS = "0";
+
+    private static final String FAIL_DEFAUKT="1";
 
     public ResultBean(String code, String msg) {
-        super();
         this.code = code;
         this.msg = msg;
     }
 
-    public static ResultBean success(Object data) {
-        return new ResultBean(data);
+    public ResultBean(String code ,String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
     }
-
-    public static ResultBean fail(String code, String msg) {
-        return new ResultBean(code, msg);
-    }
-
-    public static ResultBean failDefault(String msg){
-        return new ResultBean(FAIL_DEFAUKT,msg);
-    }
-
 }

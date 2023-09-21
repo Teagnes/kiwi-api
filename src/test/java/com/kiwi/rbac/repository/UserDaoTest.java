@@ -1,4 +1,4 @@
-package com.kiwi.rbac.repository;
+package com.kiwi.rbac.dao;
 
 import com.kiwi.rbac.model.UserEntity;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @SpringBootTest
 public class UserDaoTest {
     @Autowired
-    UserRepository userDao;
+    UserDao userDao;
 
     @Test
     public void findAll() {

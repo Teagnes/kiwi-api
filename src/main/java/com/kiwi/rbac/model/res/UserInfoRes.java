@@ -9,9 +9,16 @@ import lombok.Setter;
 @Setter
 public class UserInfoRes {
 
+
     private UserEntity user;
 
     private String token;
 
+    public UserInfoRes(UserEntity user, String token) {
+        this.user = user;
+        this.token = token;
+    }
 
+    public UserInfoRes() {
+    }
 }

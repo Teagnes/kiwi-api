@@ -2,9 +2,9 @@ package com.kiwi.rbac.controller;
 
 import com.kiwi.common.ResultBean;
 import com.kiwi.rbac.model.req.LoginReq;
-import com.kiwi.rbac.model.req.UserReq;
 import com.kiwi.rbac.model.res.UserInfoRes;
-import com.kiwi.rbac.service.LoginService;
+import com.kiwi.rbac.service.UserService;
+import io.swagger.annotations.Api;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,24 +14,25 @@ import org.springframework.web.bind.annotation.*;
  */
 
 
+@Api(value = "登录接口", tags = "登录接口")
 @RestController
 @RequestMapping("/v1")
 @Log
 public class LoginController {
 
     @Autowired
-    LoginService loginService;
+    UserService userService;
 
     @PostMapping("/login")
     public ResultBean<UserInfoRes> login(@RequestBody LoginReq loginReq){
-        ResultBean<UserInfoRes> userInfo = loginService.login(loginReq.getUsername(), loginReq.getPassword());
+        ResultBean<UserInfoRes> userInfo = userService.login(loginReq.getUsername(), loginReq.getPassword());
         return userInfo;
     }
 
 
     @GetMapping("/token/{token}")
     public ResultBean<UserInfoRes> token(@PathVariable String token){
-        ResultBean<UserInfoRes> userInfo = loginService.verifyToken(token);
+        ResultBean<UserInfoRes> userInfo = userService.verifyToken(token);
         return userInfo;
     }
 

@@ -3,6 +3,7 @@ package com.kiwi.doc.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kiwi.common.ResultBean;
+import com.kiwi.common.ResultUtil;
 import com.kiwi.doc.dao.DocDao;
 import com.kiwi.doc.dao.NoteDao;
 import com.kiwi.doc.dao.NoteDocDao;
@@ -72,7 +73,7 @@ public class DocService {
 
     public ResultBean<DocEntity> getDocByDocId(String docId) throws IOException {
         DocEntity docEntity = getDocByID(docIndex, docId);
-        return new ResultBean<>(docEntity);
+        return ResultUtil.success(docEntity);
     }
 
     public ResultBean<DocEntity> createDoc(NewDocReq newDocReq) throws IOException {
@@ -80,7 +81,7 @@ public class DocService {
         DocEntity newDoc = createNewDoc(newDocReq.getDocName());
         send2ES(docIndex,newDoc,newDoc.getDocUuid());
         saveNoteDoc(noteEntity,newDoc);
-        return new ResultBean<>(newDoc);
+        return ResultUtil.success(newDoc);
     }
 
     public DocEntity createNewDoc(String docName){
@@ -131,7 +132,7 @@ public class DocService {
     public ResultBean<Page<DocEntity>> findDocByUserId(Integer userId, Integer page , Integer size){
         Pageable pageable = PageRequest.of(page-1,size, Sort.by("updateTime").descending());
         Page<DocEntity> DataPage = docDao.findAllByUserId(userId, pageable);
-        return  new ResultBean<>(DataPage);
+        return  ResultUtil.success(DataPage);
 
     }
 
@@ -147,7 +148,7 @@ public class DocService {
         String s = om.writeValueAsString(docEntity);
         send2ES(docIndex,docEntity,docEntity.getDocUuid());
         send2ES(docIndexHis,docEntity,versionUUID);
-        return  new ResultBean<>(docEntity);
+        return  ResultUtil.success(docEntity);
     }
 
 
@@ -170,7 +171,7 @@ public class DocService {
     }
 
     public ResultBean<List<DocEntity>> findDocsByNote(Integer noteId){
-        return new ResultBean<>(docDao.findDocEntitiesByNote(noteId));
+        return ResultUtil.success(docDao.findDocEntitiesByNote(noteId));
 
     }
 
@@ -219,7 +220,7 @@ public class DocService {
             adoc.setHighLight(collect);
             docList.add(adoc);
         }
-        return new ResultBean<>(docList);
+        return ResultUtil.success(docList);
     }
 
 
