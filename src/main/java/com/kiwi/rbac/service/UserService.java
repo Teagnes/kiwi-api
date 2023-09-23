@@ -1,14 +1,7 @@
 package com.kiwi.rbac.service;
 
 import com.kiwi.common.ResultBean;
-import com.kiwi.common.ResultEnum;
-import com.kiwi.common.ResultUtil;
-import com.kiwi.rbac.config.TokenUtil;
-import com.kiwi.rbac.exception.RbacException;
-import com.kiwi.rbac.model.RoleEntity;
-import com.kiwi.rbac.model.res.UserInfoRes;
-import com.kiwi.rbac.repository.RoleRepository;
-import com.kiwi.rbac.repository.UserRepository;
+import com.kiwi.rbac.dao.UserRoleDao;
 import com.kiwi.rbac.model.UserEntity;
 import com.kiwi.rbac.model.req.UserReq;
 import org.springframework.beans.factory.annotation.Autowired;
