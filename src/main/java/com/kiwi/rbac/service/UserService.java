@@ -1,9 +1,16 @@
 package com.kiwi.rbac.service;
 
 import com.kiwi.common.ResultBean;
-import com.kiwi.rbac.dao.UserRoleDao;
+import com.kiwi.common.ResultEnum;
+import com.kiwi.common.ResultUtil;
+import com.kiwi.rbac.config.TokenUtil;
+import com.kiwi.rbac.exception.RbacException;
+import com.kiwi.rbac.model.RoleEntity;
 import com.kiwi.rbac.model.UserEntity;
 import com.kiwi.rbac.model.req.UserReq;
+import com.kiwi.rbac.model.res.UserInfoRes;
+import com.kiwi.rbac.repository.RoleRepository;
+import com.kiwi.rbac.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -13,8 +20,9 @@ import java.util.stream.Collectors;
 
 @Component
 public class UserService {
+
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -108,6 +116,9 @@ public class UserService {
             userRepository.delete(user);
             return ResultUtil.success(user);
         }
+
+
+
     }
 
 }

@@ -66,7 +66,6 @@ CREATE TABLE `user_role`
     `id`       int(11)      NOT NULL AUTO_INCREMENT  COMMENT '自增主键',
     `user_id` int(11) NULL DEFAULT NULL COMMENT  '用户id',
     `role_id` int(11) NULL DEFAULT NULL COMMENT '角色id',
-    UNIQUE KEY `user_role_uid_rid` (`user_id`, `role_id`) USING BTREE,
     INDEX `user_role_uid_fk` (`user_id`) USING BTREE,
     INDEX `user_role_rid_fk` (`role_id`) USING BTREE,
     CONSTRAINT `user_role_rid_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,

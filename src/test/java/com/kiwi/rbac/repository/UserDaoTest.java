@@ -1,6 +1,7 @@
 package com.kiwi.rbac.dao;
 
 import com.kiwi.rbac.model.UserEntity;
+import com.kiwi.rbac.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @SpringBootTest
 public class UserDaoTest {
     @Autowired
-    UserDao userDao;
+    UserRepository userDao;
 
     @Test
     public void findAll() {

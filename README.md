@@ -18,7 +18,15 @@ docker build -t kiwi_mysql:v0.1 .
 docker run -itd  --name mysql-rbac -p 3306:3306 -e  TZ=Asia/Shanghai -e  MYSQL_ROOT_PASSWORD=root -d kiwi_mysql:v0.1
 
 ```
+MAC 环境安装
+```shell
+# 构建镜像
+cd docker/db/mac
+docker build -t kiwi_mysql:v0.1 .
+# 创建容器
+docker run -itd  --name mysql-rbac -p 3306:3306 -e  TZ=Asia/Shanghai -e  MYSQL_ROOT_PASSWORD=root -d kiwi_mysql:v0.1
 
+```
 
 ### elasticsearh
 单节点
